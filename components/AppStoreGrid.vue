@@ -65,9 +65,6 @@ export default {
       return this.data.filter(el => el.price < this.pricerange);
     }
   },
-  created () {
-      this.$store.dispatch('getAllProducts')
-  },
   components: {
     StarRating
   }

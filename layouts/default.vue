@@ -16,7 +16,10 @@ export default {
   components: {
     AppFooter,
     AppNav
-  }
+  },
+  created() {
+    this.$store.dispatch("getAllProducts");
+  },
 };
 </script>
 

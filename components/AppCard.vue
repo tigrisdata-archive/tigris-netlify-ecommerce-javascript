@@ -88,6 +88,7 @@ export default {
       // confirms the payment and will automatically display a
       // pop-up modal if the purchase requires authentication
       this.loading = true;
+      this.$store.commit("updateCartUI", "loading");
       handleCardPayment(this.$store.getters.clientSecret, {
         receipt_email: this.stripeEmail
       }).then(result => {

@@ -1,5 +1,6 @@
 <template>
   <svg
+    id="spinner"
     height="100px"
     width="100px"
     fill="#000000"
@@ -50,37 +51,18 @@
   </svg>
 </template>
 
-<script>
-import { TimelineMax, Elastic } from "gsap";
-
-export default {
-  methods: {
-    loadAnim() {
-      TweenMax.staggerFromTo(
-        "path",
-        1.25,
-        {
-          opacity: 0,
-          scale: 0,
-          transformOrigin: "50% 50%"
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          repeat: -1,
-          repeatDelay: 0.5,
-          transformOrigin: "50% 50%",
-          ease: Elastic.easeOut.config(1, 0.4)
-        },
-        0.02
-      );
-    }
-  },
-  mounted() {
-    this.loadAnim();
-  }
-};
-</script>
+<script></script>
 
 <style lang="scss" scoped>
+#spinner {
+  animation: spin 4s infinite linear;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>
