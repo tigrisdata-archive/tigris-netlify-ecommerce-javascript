@@ -11,12 +11,10 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY),
   };
 
 const tigris = new Tigris({
-  serverUrl: "localhost:8081",
-  insecureChannel: true,
+  serverUrl: process.env.TIGRIS_URL
 })
 
-const db = tigris.getDatabase("ecommerce_db");
-const collection = db.getCollection("ecommerce_collection")
+const collection = tigris.getDatabase("ecommerce_db").getCollection("ecommerce_collection")
 
 exports.handler = async (event, context) => {
   // CORS
