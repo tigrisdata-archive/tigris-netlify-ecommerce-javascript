@@ -1,9 +1,10 @@
 import axios from "axios";
+import _ from "json-bigint";
 import data from "~/static/storedata.json";
 
 export const state = () => ({
   cartUIStatus: "idle",
-  storedata: data,
+  storedata: [],
   cart: [],
   clientSecret: "" // Required to initiate the payment from the client
 });
@@ -30,9 +31,13 @@ export const getters = {
     });
   },
   clientSecret: state => state.clientSecret
+
 };
 
 export const mutations = {
+  setProducts: (state, payload) => {
+    state.storedata = payload;
+  },
   updateCartUI: (state, payload) => {
     state.cartUIStatus = payload;
   },
@@ -46,7 +51,7 @@ export const mutations = {
       ? (itemfound.quantity += payload.quantity)
       : state.cart.push(payload)
   },
-   setClientSecret: (state, payload) => {
+  setClientSecret: (state, payload) => {
     state.clientSecret = payload;
    },
   addOneToCart: (state, payload) => {
@@ -67,6 +72,7 @@ export const mutations = {
 export const actions = {
   async createPaymentIntent({ getters, commit }) {
     try {
+      console.log(getters.cartItems)
       // Create a PaymentIntent with the information about the order
       const result = await axios.post(
         "https://ecommerce-netlify.netlify.app/.netlify/functions/create-payment-intent",
@@ -87,6 +93,23 @@ export const actions = {
       }
     } catch (e) {
       console.log("error", e);
+    }
+  },
+
+  async getAllProducts ({ commit }) {
+    console.log("process.env.STATIC_DATA")
+    console.log(process.env.STATIC_DATA)
+    if (process.env.STATIC_DATA = true) {
+      commit("setProducts", data)
+      return
+    }
+    try {
+      const response = await axios.post("http://localhost:8885/.netlify/functions/read-all-data");
+      if (response.data) {
+        commit("setProducts", response.data);
+      }
+    } catch (errors) {
+      console.error(errors);
     }
   }
 };

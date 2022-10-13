@@ -1,5 +1,6 @@
 // An endpoint that calculates the order total and creates a 
 // PaymentIntent on Stripe 
+import { Tigris } from "@tigrisdata/core";
 
 require("dotenv").config();
 const axios = require("axios");
@@ -8,6 +9,14 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY),
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Content-Type"
   };
+
+const tigris = new Tigris({
+  serverUrl: "localhost:8081",
+  insecureChannel: true,
+})
+
+const db = tigris.getDatabase("ecommerce_db");
+const collection = db.getCollection("ecommerce_collection")
 
 exports.handler = async (event, context) => {
   // CORS
@@ -39,17 +48,30 @@ exports.handler = async (event, context) => {
     // from manipulating the order amount from the client
     // Here we will use a simple json file to represent inventory
     // but you could replace this with a DB lookup
-    const storeDatabase = await axios.get(
-      "https://ecommerce-netlify.netlify.app/storedata.json"
-    );
 
-    const amount = data.items.reduce((prev, item) => {
-      // lookup item information from "database" and calculate total amount
-      const itemData = storeDatabase.data.find(
-        storeItem => storeItem.id === item.id
-      );
-      return prev + itemData.price * 100 * item.quantity;
-    }, 0);
+    console.log(data.items)
+    let amount = 0;
+    for (let item of data.items) {
+      console.log(item)
+      console.log(item.id)
+
+      // a simple logic to fetch from the database and if item is present then add it to amount
+      // note: this can be replaced by a batch call, but for the purpose of demonstration we are calling one by one.
+      const product = await collection.findOne({
+        id: item.id
+      })
+      console.log(product);
+
+      if (product == undefined) {
+        continue
+      }
+
+      console.log("product price ", product.price)
+      console.log("item quantity ", item.quantity)
+      amount = amount + product.price * item.quantity
+    }
+
+    console.log('amount charging ', amount)
 
     // Create a PaymentIntent on Stripe
     // A PaymentIntent represents your customer's intent to pay
