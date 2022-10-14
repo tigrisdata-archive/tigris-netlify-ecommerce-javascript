@@ -14,17 +14,25 @@ There are two articles explaining how this site is set up:
 
 ``` bash
 # install dependencies
-$ yarn install or npm run install
+$ npm run install
 
-# serve with hot reload at localhost:3000
-$ yarn dev or npm run dev
+# build
+$ npm run build
 
-# build for production and launch server
-$ yarn build or npm run build
-$ yarn start or npm run start
+# setup
+$ npm run setup
+ 
+# install netlify CLI
+$ npm install netlify-cli -g
 
-# generate static project
-$ yarn generate or npm run generate
+# Sign into your Netlify account
+$ netlify login
+
+# Run the app server locally to preview your site
+$ netlify dev
+
+# Deploy
+$ netlify deploy
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
