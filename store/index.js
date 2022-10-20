@@ -15,7 +15,7 @@ export const getters = {
   featuredProducts: state => state.storedata.slice(0, 3),
   women: state => state.storedata.filter(el => el.gender === "Female"),
   men: state => state.storedata.filter(el => el.gender === "Male"),
-  search: state => state.searchedData,
+  searchResult: state => state.searchedData,
   cartCount: state => {
     if (!state.cart.length) return 0;
     return state.cart.reduce((ac, next) => ac + next.quantity, 0);
@@ -102,7 +102,8 @@ export const actions = {
     }
   },
 
-  async searchProducts ({ keyword, commit }) {
+  async searchProducts ({ commit }, keyword ) {
+
     try {
       const response = await axios.post(
         "/.netlify/functions/search-products", 
@@ -116,9 +117,6 @@ export const actions = {
         }
       );
       if (response.data) {
-        console.log(response.data)
-        console.log("_document")
-        console.log(response.data)
         commit("searchedProducts", response.data);
       }
     } catch (errors) {
@@ -129,13 +127,13 @@ export const actions = {
   async getAllProducts ({ commit }) {
     console.log("process.env.STATIC_DATA")
     console.log(process.env.STATIC_DATA)
-    if (process.env.STATIC_DATA = true) {
-      commit("setProducts", data)
-      return
-    }
+    // if (process.env.STATIC_DATA = true) {
+    //   commit("setProducts", data)
+    //   return
+    // }
     try {
       //http://localhost:8885
-      const response = await axios.post("/.netlify/functions/read-all-data");
+      const response = await axios.post("/.netlify/functions/read-all-products");
       if (response.data) {
         commit("setProducts", response.data);
       }
