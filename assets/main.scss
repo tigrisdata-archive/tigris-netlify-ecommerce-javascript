@@ -55,16 +55,20 @@ button {
   border: 1px solid #ccc;
   background: white;
   padding: 10px 14px;
-  cursor: pointer;
   color: black;
+  cursor: pointer;
   font-weight: 700;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
   transition: 0.3s all ease;
-  &:hover {
+  &:hover:enabled {
     background: black;
     border: 1px solid black;
     color: white;
+  }
+  &:disabled{
+    pointer-events: none;
+    color: grey;
   }
 }
 

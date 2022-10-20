@@ -1,43 +1,63 @@
 <template>
 <div>
-  <div class="search">
+
+  <div class="searchHeader">
     <input type="text" v-model="keyword" placeholder="Search Keyword"/> <br />
     <button
-        class="search button"
+        class="searchBtn"
         @click="search"
-      >Search Products</button>
+        :disabled="loading || !keyword"
+      >{{(!loading) ? 'Search Products' : 'Loading..'}}</button>
   </div>
 
+  <p class="noResults" v-if="usingSearch && !loading && searchResult.length<1">No results found..</p>
 
-  <app-store-grid :data="search" />
+  <app-store-grid :data="(usingSearch) ? searchResult : storedata" />
+  
+
+ 
+
 
 </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import AppStoreGrid from "~/components/AppStoreGrid.vue";
 
 export default {
   components: {
     AppStoreGrid
   },
+  watch: {
+    keyword: function(value) {
+        if(value==''){
+          this.usingSearch = false;
+        }
+      }
+    },
   computed: {
-    ...mapGetters(["searchProducts"])
+    ...mapGetters(["searchResult"]),
+    ...mapState(["storedata"])
+
   },
   data() {
     return {
-      complete: false,
       keyword: "",
       error: "",
-      loading: false
+      loading: false,
+      usingSearch:false,
     };
   },
    methods: {
     search() {
-      console.log("search")
       this.loading = true;
+      this.usingSearch = true;
+      
       this.$store.dispatch("searchProducts", this.keyword)
+      .then(()=>{
+        this.loading = false;
+      })
     }
    }
 };
@@ -46,8 +66,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .search {
-    margin: 20px auto;
+.noResults{
+  text-align: center;
+}
+.searchBtn{
+  width:180px;
+}
+  .searchHeader {
+    display: flex;
     justify-content: center;
+    gap:10px;
+    margin-bottom: 40px;
   }
+  .search:hover:enabled{
+
+    
+}
 </style>
