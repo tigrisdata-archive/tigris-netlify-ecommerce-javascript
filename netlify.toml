@@ -1,3 +1,5 @@
 [build]
   functions = "functions"
-  publish = "dist"
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["~/static/storedata.json"]

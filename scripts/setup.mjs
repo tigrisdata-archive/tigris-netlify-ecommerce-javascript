@@ -5,8 +5,8 @@ import data from '../static/storedata.json' assert { type: "json" };
 
 
 // TODO: Add error handling
-dotenv.config({ path: '.env.local' })
-const inputUrl = process.env.TIGRIS_HOST
+dotenv.config({ path: '.env' })
+const inputUrl = process.env.TIGRIS_URL
 console.log(`Bootstrapping database and collection at ${inputUrl}....`)
 
 const DB_NAME = 'ecommerce_db'

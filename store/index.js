@@ -3,7 +3,9 @@ import _ from "json-bigint";
 import data from "~/static/storedata.json";
 
 export const state = () => ({
+  searchStatus: "empty",
   cartUIStatus: "idle",
+  searchedData: [],
   storedata: [],
   cart: [],
   clientSecret: "" // Required to initiate the payment from the client
@@ -13,6 +15,7 @@ export const getters = {
   featuredProducts: state => state.storedata.slice(0, 3),
   women: state => state.storedata.filter(el => el.gender === "Female"),
   men: state => state.storedata.filter(el => el.gender === "Male"),
+  search: state => state.searchedData,
   cartCount: state => {
     if (!state.cart.length) return 0;
     return state.cart.reduce((ac, next) => ac + next.quantity, 0);
@@ -37,6 +40,9 @@ export const getters = {
 export const mutations = {
   setProducts: (state, payload) => {
     state.storedata = payload;
+  },
+  searchedProducts: (state, payload) => {
+    state.searchedData = payload, state.searchStatus = "success";
   },
   updateCartUI: (state, payload) => {
     state.cartUIStatus = payload;
@@ -96,6 +102,30 @@ export const actions = {
     }
   },
 
+  async searchProducts ({ keyword, commit }) {
+    try {
+      const response = await axios.post(
+        "/.netlify/functions/search-products", 
+        {
+          q: keyword,
+        }, 
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      if (response.data) {
+        console.log(response.data)
+        console.log("_document")
+        console.log(response.data)
+        commit("searchedProducts", response.data);
+      }
+    } catch (errors) {
+      console.error(errors);
+    }
+  },
+
   async getAllProducts ({ commit }) {
     console.log("process.env.STATIC_DATA")
     console.log(process.env.STATIC_DATA)
@@ -104,7 +134,8 @@ export const actions = {
       return
     }
     try {
-      const response = await axios.post("http://localhost:8885/.netlify/functions/read-all-data");
+      //http://localhost:8885
+      const response = await axios.post("/.netlify/functions/read-all-data");
       if (response.data) {
         commit("setProducts", response.data);
       }
