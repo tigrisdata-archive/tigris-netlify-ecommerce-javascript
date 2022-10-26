@@ -1,7 +1,9 @@
 import { Tigris } from "@tigrisdata/core";
 
-const tigris = new Tigris({
-  serverUrl: process.env.TIGRIS_URL
+const tigris = new Tigris({ 
+  serverUrl: process.env.TIGRIS_URI, 
+  clientId: process.env.TIGRIS_CLIENT_ID, 
+  clientSecret: process.env.TIGRIS_CLIENT_SECRET
 })
 
 exports.handler = async (event, context) => {
@@ -22,8 +24,6 @@ exports.handler = async (event, context) => {
 
   try {
     const searchResult = await collection.search(searchReq);
-    console.log(searchResult)
-    console.log("after searchResult")
     const products = new Array()
     for (const hit of searchResult.hits) {
       products.push(hit.document)

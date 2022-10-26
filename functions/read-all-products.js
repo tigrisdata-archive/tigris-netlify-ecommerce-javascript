@@ -1,10 +1,12 @@
 import { Tigris } from "@tigrisdata/core";
 
-const tigris = new Tigris({
-  serverUrl: process.env.TIGRIS_URL
+
+const tigris = new Tigris({ 
+  serverUrl: process.env.TIGRIS_URI, 
+  clientId: process.env.TIGRIS_CLIENT_ID, 
+  clientSecret: process.env.TIGRIS_CLIENT_SECRET
 })
 
-console.log(process.env.TIGRIS_URL)
 exports.handler = async (event, context) => {
   const collection = tigris.getDatabase("ecommerce_db").getCollection("ecommerce_collection")
 
