@@ -5,7 +5,7 @@ import data from '../static/storedata.json' assert { type: "json" };
 
 
 // TODO: Add error handling
-dotenv.config({ path: '.env.local' })
+dotenv.config({ path: '.env.development' })
 const tigrisUri = process.env.TIGRIS_URI
 if (!tigrisUri) {
   console.log('TIGRIS_URI is is missing in environment variables')

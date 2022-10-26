@@ -1,12 +1,17 @@
 import data from './static/storedata.json'
 let dynamicRoutes = () => {
   return new Promise(resolve => {
-    resolve(data.map(el => `product/${el.id}`))
+    resolve(data.map(el => {
+      return {
+        route: `product/${el.id}`,
+        payload: data,
+      }
+    }))
   })
 }
 
 export default {
-  mode: 'universal',
+
   target: 'static',
   /*
    ** Headers of the page
@@ -34,7 +39,14 @@ export default {
     ]
   },
   generate: {
-    routes: dynamicRoutes
+    routes() {
+      return data.map(el => {
+        return {
+          route: `product/${el.id}`,
+          payload: data,
+        }
+      })
+    }
   },
   /*
    ** Customize the progress-bar color

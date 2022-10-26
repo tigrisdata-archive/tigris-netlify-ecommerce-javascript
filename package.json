@@ -5,12 +5,14 @@
   "author": "sdras",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=dev nuxt",
-    "build": "nuxt build",
+    "dev": "npm run setup:dev && nuxt dev",
+    "build": "nuxt build && npm run setup:prod",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "clean": "rm -rf node_modules .nuxt",
-    "setup": "node scripts/setup.mjs"
+    "setup": "node scripts/setup.mjs",
+    "setup:dev": "NODE_ENV=development npm run setup",
+    "setup:prod": "NODE_ENV=production npm run setup"
   },
   "dependencies": {
     "@tigrisdata/core": "^1.0.0-beta.12",

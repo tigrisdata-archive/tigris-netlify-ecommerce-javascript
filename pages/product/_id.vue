@@ -84,6 +84,7 @@ export default {
       return this.productList.find(el => el.id === this.id);
     }
   },
+  
   async asyncData({ params, error, payload }) {
     return {
       productList: payload,
