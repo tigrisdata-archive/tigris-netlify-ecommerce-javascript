@@ -13,7 +13,7 @@
     "setup": "node scripts/setup.mjs"
   },
   "dependencies": {
-    "@tigrisdata/core": "^1.0.0-beta.11",
+    "@tigrisdata/core": "^1.0.0-beta.12",
     "axios": "^0.21.1",
     "dotenv": "^8.0.0",
     "gsap": "^3.6.0",

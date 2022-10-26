@@ -32,7 +32,7 @@ git clone https://github.com/tigrisdata/tigris-netlify-ecommerce
 $ git clone https://github.com/tigrisdata/tigris-netlify-ecommerce
 
 # install dependencies
-$ npm run install
+$ npm install
 
 # build
 $ npm run build
