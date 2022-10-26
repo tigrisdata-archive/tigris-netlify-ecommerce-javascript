@@ -79,9 +79,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(["storedata"]),
     product() {
-      return this.storedata.find(el => el.id === this.id);
+      console.log(this.data)
+      return this.productList.find(el => el.id === this.id);
+    }
+  },
+  async asyncData({ params, error, payload }) {
+    return {
+      productList: payload,
     }
   },
   methods: {

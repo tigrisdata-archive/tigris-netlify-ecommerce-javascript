@@ -34,17 +34,14 @@ $ git clone https://github.com/tigrisdata/tigris-netlify-ecommerce
 # install dependencies
 $ npm install
 
-# build
-$ npm run build
-
-# setup
-$ npm run setup
- 
 # install netlify CLI
 $ npm install netlify-cli -g
 
 # Sign into your Netlify account
 $ netlify login
+
+# Build and setup
+$ netlify build
 
 # Run the app server locally to preview your site
 $ netlify dev

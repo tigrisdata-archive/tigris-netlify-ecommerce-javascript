@@ -125,15 +125,7 @@ export const actions = {
   },
 
   async getAllProducts ({ commit }) {
-    console.log(process.env.TIGRIS_URL)
-    //console.log("process.env.STATIC_DATA")
-    //console.log(process.env.STATIC_DATA)
-    // if (process.env.STATIC_DATA = true) {
-    //   commit("setProducts", data)
-    //   return
-    // }
     try {
-      //http://localhost:8885
       const response = await axios.post("/.netlify/functions/read-all-products");
       if (response.data) {
         commit("setProducts", response.data);
