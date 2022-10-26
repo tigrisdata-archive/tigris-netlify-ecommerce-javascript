@@ -13,7 +13,7 @@ There are two articles explaining how this site is set up:
 * Explanation of dynamic routing in Nuxt for the individual product pages: [Creating Dynamic Routes in Nuxt Application](https://css-tricks.com/creating-dynamic-routes-in-a-nuxt-application/)
 
 
-# 📖 Running Next.js server & Tigris locally
+# Running Locally
 
 ## Prerequisites
 
@@ -29,6 +29,9 @@ $ git clone https://github.com/tigrisdata/tigris-netlify-ecommerce
 
 # install dependencies
 $ npm install
+
+# Start the tigris server
+$ tigris dev start
 
 # perform the setup, like creating databases and collections in Tigris
 $ npm run dev
