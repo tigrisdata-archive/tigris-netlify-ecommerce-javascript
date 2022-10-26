@@ -23,10 +23,6 @@ There are two articles explaining how this site is set up:
 2. Node.js version 16+
 
 ## Instructions
-```shell
-git clone https://github.com/tigrisdata/tigris-netlify-ecommerce
-```
-
 ``` shell
 # Clone the repo
 $ git clone https://github.com/tigrisdata/tigris-netlify-ecommerce
@@ -34,7 +30,7 @@ $ git clone https://github.com/tigrisdata/tigris-netlify-ecommerce
 # install dependencies
 $ npm install
 
-# setup
+# perform the setup, like creating databases and collections in Tigris
 $ npm run dev
 
 # install netlify CLI
